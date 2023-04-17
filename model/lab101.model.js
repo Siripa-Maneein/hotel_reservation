@@ -451,8 +451,8 @@ const insertReservationDetail = async(res,playload) => {
         let con = await sql.connect(string_connection)
         let request = new sql.Request(con);
 
-        const result = await request.input('reservation_id', sql.VarChar, playload.reservation_id).
-        input('room_id', sql.VarChar, playload.room_id).
+        const result = await request.input('reservation_id', sql.Int, playload.reservation_id).
+        input('room_id', sql.Int, playload.room_id).
         query('insert into dbo.reservation_detail (reservation_id,room_id) \
         values(@reservation_id,@room_id)');
 
