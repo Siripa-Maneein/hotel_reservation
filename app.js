@@ -16,6 +16,10 @@ const {
   insertType,
   updateType,
   deleteType,
+  searchCustomer,
+  insertCustomer,
+  updateCustomer,
+  deleteCustomer,
 } = require("./model/lab101.model");
 
 // load .env
@@ -48,6 +52,16 @@ const TypeformsaveDataValidator = [
 
 ];
 
+// check customer Validator
+const CustomerformsaveDataValidator = [
+  check("customer_id").not().isEmpty().withMessage("Please input your customer_id"),
+  check("firstname").not().isEmpty().withMessage("Please input your firstname"),
+  check("lastname").not().isEmpty().withMessage("Please input your lastname"),
+  check("email").not().isEmpty().withMessage("Please input your email"),
+  check("phone").not().isEmpty().withMessage("Please input your phone"),
+
+];
+
 // start express
 var app = express();
 app.use(cors());
@@ -65,6 +79,97 @@ app.use(bodyParser.json({ verify: rawBodySaver }));
 
 // start ejs (Embedded JavaScript templates)
 app.set("view engine", "ejs");
+
+// customer list data
+app.get("/customer", async function (req, res) {
+  let results = await searchCustomer(res);
+  res.render("customer_listdata", {
+    resultsCustomer: results.recordset,
+  });
+});
+
+// customer input form
+app.get("/customer/form", function (req, res) {
+  res.render("customer_formdata");
+});
+
+// customer update form
+app.get("/customer/update/:customer_id", function (req, res) {
+  console.log(req.params.customer_id);
+  // query for get name
+  // ...
+
+  res.render("customer_updatedata", {
+    idCustomer: req.params.customer_id,
+  });
+});
+
+// customer delete form
+app.get("/customer/delete/:customer_id", async function (req, res) {
+  console.log(req.params.customer_id);
+  // query for get name
+  // ...
+  let results = await deleteCustomer(res,req.params.customer_id);
+  if (results == 1) {
+    return res.redirect("/customer");
+  } else {
+    console.log(results);
+  }
+});
+
+// insert new customer record
+app.post("/customer/formsave", CustomerformsaveDataValidator, async function (req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("customer_formdata", {
+      initData: req.body,
+      errorData: errors.mapped(),
+    });
+  } else {
+    let my_paylaod = {
+      customer_id: req.body.customer_id,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      phone: req.body.phone,
+    };
+
+    console.log("insert new record: " + my_paylaod);
+    let results = await insertCustomer(res, my_paylaod)
+    if (results == 1) {
+      return res.redirect("/customer");
+    } else {
+      console.log(results);
+    }
+  }
+});
+
+// update customer record
+app.post("/customer/updatesave", CustomerformsaveDataValidator, async function (req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("customer_updatedata", {
+      initData: req.body,
+      errorData: errors.mapped(),
+    });
+  } else {
+    let my_paylaod = {
+      customer_id: req.body.customer_id,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      phone: req.body.phone,
+    };
+
+    console.log("Update: " + my_paylaod);
+    let results = await updateCustomer(res, my_paylaod)
+    if (results == 1) {
+      return res.redirect("/customer");
+    } else {
+      console.log(results);
+    }
+  }
+});
 
 // list data
 app.get("/room", async function (req, res) {

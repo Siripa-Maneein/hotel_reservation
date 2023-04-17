@@ -2,6 +2,111 @@ const sql = require('mssql')
 require('dotenv').config()
 const string_connection = `Server=${process.env.DB_SERVER},${process.env.DB_PORT};Database=${process.env.DB_NAME};User Id=${process.env.DB_USER};Password=${process.env.DB_PWD};Encrypt=false`;
 
+const searchCustomer = async(res) => {
+    try {
+    
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+        const result = await request.query('select * from customer');
+        //console.log(string_connection);
+        // console.log(result);
+        return result;
+
+    }
+    catch (err) {
+        console.log(string_connection);
+        res.status(500).send('Error connecting to the database');
+
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+}
+
+const insertCustomer = async(res,playload) => {
+
+    try {
+        
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+        console.log(playload)
+  
+        const result = await request.input('customer_id', sql.Int, playload.customer_id).
+        input('firstname', sql.NVarChar, playload.firstname).
+        input('lastname', sql.NVarChar, playload.lastname).
+        input('email', sql.NVarChar, playload.email).
+        input('phone', sql.NVarChar, playload.phone).
+       
+        query('insert into dbo.customer (customer_id, firstname, lastname, email, phone) \
+        values(@customer_id,@firstname,@lastname,@email,@phone)');
+  
+        console.log('Rows affected:', result.rowsAffected[0]);
+        
+        return result.rowsAffected[0];
+    }
+    catch (err) {
+        res.status(500).send(err);
+  
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+  }
+
+  const updateCustomer = async(res,playload) => {
+
+    try {
+        
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+        console.log(playload)
+        const result = await request.input('customer_id', sql.Int, playload.customer_id).
+        input('firstname', sql.NVarChar, playload.firstname).
+        input('lastname', sql.NVarChar, playload.lastname).
+        input('email', sql.NVarChar, playload.email).
+        input('phone', sql.NVarChar, playload.phone).
+
+        query('update dbo.customer set firstname=@firstname, lastname=@lastname, \
+        email=@email, phone=@phone where customer_id=@customer_id');
+
+        console.log('Result: ', result.rowsAffected[0]);
+        return result.rowsAffected[0];
+        
+    }
+
+    catch (err) {
+        res.status(500).send(err);
+
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+}
+
+  const deleteCustomer = async(res,customer_id) => {
+
+    try {
+        
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+        console.log("delete customer_id:"+customer_id)
+        const result = await request.input('customer_id', sql.Int,customer_id).
+        query('delete from dbo.customer where customer_id=@customer_id');
+
+        console.log('Result: ', result.rowsAffected[0]);
+        
+        return result.rowsAffected[0];
+        
+    }
+
+    catch (err) {
+        res.status(500).send(err);
+
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+}
 
 const searchRoom = async(res) => {
 
@@ -331,4 +436,7 @@ module.exports = {
     searchRoom,insertRoom,
     updateRoom,deleteRoom, 
     searchType,insertType,
-    updateType,deleteType}
+    updateType,deleteType,
+    searchCustomer,insertCustomer,
+    updateCustomer,deleteCustomer
+    }

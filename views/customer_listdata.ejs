@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Customer</title>
+   </head>
+   <body>
+      <a href="/customer/form">[+ New Record]</a>
+      <table width="600" border="1">
+         <thead>
+            <th>customer_id</th>
+            <th>firstname</th>
+            <th>lastname</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>Update</th>
+            <th>Delete</th>
+         </thead>
+         <tbody>
+            <% if ( resultsCustomer.length> 0 ) { %>
+            <% resultsCustomer.forEach ( function ( recordCustomer, index ) { %>
+            <form action="/submit" method="POST"></form>
+            <tr>
+               <td>
+                  <%= recordCustomer.customer_id; %>
+               </td>
+               <td>
+                  <%= recordCustomer.firstname; %>
+               </td>
+               <td>
+                  <%= recordCustomer.lastname; %>
+               </td>
+               <td>
+                  <%= recordCustomer.email; %>
+               </td>
+               <td>
+                  <%= recordCustomer.phone; %>
+               </td>
+               <td>
+                  <button class="update-btn" data-customer_id="<%= recordCustomer.customer_id %>">Update</button>
+               </td>
+               <td>
+                  <button class="delete-btn" data-customer_id="<%= recordCustomer.customer_id %>">Delete</button>
+               </td>
+            </tr>
+            </form>
+            <% } ); %>
+            <% } else { %>
+            <tr>
+               <td colspan="100%">- ไม่มีข้อมูล -</td>
+            </tr>
+            <% } %>
+         </tbody>
+      </table>
+      <script>
+         document.querySelectorAll('.update-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const customer_id = this.getAttribute('data-customer_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Update button with ID: ' + customer_id);
+                 window.location.href = '/customer/update/'+customer_id;
+             });
+         });
+
+         document.querySelectorAll('.delete-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const customer_id = this.getAttribute('data-customer_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Delete button with ID: ' + customer_id);
+                 window.location.href = '/customer/delete/'+customer_id;
+             });
+         });
+     </script>
+    </body>
+    </html>

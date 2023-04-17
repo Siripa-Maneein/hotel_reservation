@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Update Customer</title>
+    </head>
+    <body>
+        <form action="/customer/updatesave" method="POST">
+            <div>
+                <span> Update customer_id: <%= idCustomer; %></br></span>
+                <span>customer_id : </span>
+                <input type="number" name="customer_id" value="<%= idCustomer; %>" readonly />
+            </div>
+            <div>
+                <span>firstname : </span>
+                <input type="text" name="firstname" value="" />
+            </div>
+            <div>
+                <span>lastname : </span>
+                <input type="text" name="lastname" value="" />
+            </div>
+            <div>
+                <span>email : </span>
+                <input type="text" name="email" value="" />
+            </div>
+            <div>
+                <span>phone : </span>
+                <input type="text" name="phone" value="" />
+            </div>
+
+            <input type="submit" value="submit" />
+        </form>
+    </body>
+</html>
