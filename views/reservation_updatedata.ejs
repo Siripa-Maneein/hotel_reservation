@@ -2,13 +2,19 @@
 <html>
     <head>
         <title>Update reservation</title>
+        <link rel="stylesheet" href="/stylescheets/formdata.css" type="text/css">
     </head>
     <body>
+        <div class="form-input">
+            <div class="head">
+                <h4> Update reservation_id: <%= idReservation; %></h4>
+                <hr>
+            </div>
         <form action="/reservation/updatesave" method="POST">
             <div>
-                <span> Update reservation_id: <%= idReservation; %></br></span>
+                <span></br></span>
                 <span>reservation_id : </span>
-                <input type="text" name="reservation_id" value="" />
+                <input type="text" name="reservation_id" value="<%= idReservation; %>" readonly />
             </div>
             <div>
                 <span>customer_id : </span>
@@ -43,7 +49,8 @@
                 <INPUT TYPE="radio" NAME="payment_status" VALUE="paid">paid
                 <INPUT TYPE="radio" NAME="payment_status" VALUE="unpaid">unpaid
             </div>
-            <input type="submit" value="submit" />
+            <input type="submit" value="submit" id="submit" />
         </form>
+        </div>
     </body>
 </html>

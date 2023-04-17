@@ -2,9 +2,14 @@
 <html>
     <head>
         <title>Update Type</title>
+        <link rel="stylesheet" href="/stylescheets/formdata.css" type="text/css">
     </head>
     <body>
-        <h3>Type Number: <%= idType; %></h3> 
+        <div class="form-input">
+            <div class="head">
+                <h4>Update type_id: <%= idType; %></h4>
+                <hr>
+            </div>
         <form action="/type/updatesave" method="POST">
             <div>
                 <span>type_id : </span>
@@ -56,7 +61,8 @@
                 <span><%= errorData.price.msg; %></span>
                 <% } %>
             </div>
-            <input type="submit" value="submit" />
+            <input type="submit" value="submit" id="submit" />
         </form>
+        </div>
     </body>
 </html>
