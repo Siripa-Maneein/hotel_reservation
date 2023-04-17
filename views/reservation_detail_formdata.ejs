@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Input New Data</title>
+        <link rel="stylesheet" href="../stylescheets/reservation_detail_formdata.css" type="text/css">
+    </head>
+    <body>
+        <div class="form-input">
+            <div class="head">
+                <h4>Input New Data</h4>
+                <hr>
+            </div>
+            <form action="/reservation_detail/formsave" method="POST">
+                <div class="res-id">
+                    <label>reservation_id : </label>
+                    <input type="text" name="reservation_id" value="" id="res"/>
+                </div>
+                <div class="room-id">
+                    <label>room_id : </label>
+                    <input type="text" name="room_id" value="" id="room"/>
+                </div>
+                <input type="submit" value="submit" id="submit"/>
+            </form>
+        </div>
+        
+    </body>
+</html>

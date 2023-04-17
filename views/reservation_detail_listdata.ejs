@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Hotel Reservation</title>
+   </head>
+   <body>
+      <a href="/reservation_detail/form">[+ New Record]</a>
+      <table width="600" border="1">
+         <thead>
+            <th>reservation_id</th>
+            <th>room_id</th>
+            <th>Update</th>
+            <th>Delete</th>
+         </thead>
+         <tbody>
+            <% if ( resultsReservationDetail.length> 0 ) { %>
+            <% resultsReservationDetail.forEach ( function ( recordReservationDetail, index ) { %>
+            <form action="/submit" method="POST"></form>
+            <tr>
+               <td>
+                  <%= recordReservationDetail.reservation_id; %>
+               </td>
+               <td>
+                  <%= recordReservationDetail.room_id; %>
+               </td>
+               <td>
+                  <button class="update-btn" data-reservation_id="<%= recordReservationDetail.reservation_id %>">Update</button>
+               </td>
+               <td>
+                  <button class="delete-btn" data-reservation_id="<%= recordReservationDetail.reservation_id %>">Delete</button>
+               </td>
+            </tr>
+            </form>
+            <% } ); %>
+            <% } else { %>
+            <tr>
+               <td colspan="100%">- ไม่มีข้อมูล -</td>
+            </tr>
+            <% } %>
+         </tbody>
+      </table>
+      <script>
+         document.querySelectorAll('.update-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const reservation_id = this.getAttribute('data-reservation_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Update button with ID: ' + reservation_id);
+                 window.location.href = '/reservation/update/'+reservation_id;
+             });
+         });
+
+         document.querySelectorAll('.delete-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const reservation_id = this.getAttribute('data-reservation_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Delete button with ID: ' + reservation_id);
+                 window.location.href = '/reservation/delete/'+reservation_id;
+             });
+         });
+     </script>
+     
+   </body>
+</html>

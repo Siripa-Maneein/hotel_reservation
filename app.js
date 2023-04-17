@@ -20,6 +20,10 @@ const {
   insertCustomer,
   updateCustomer,
   deleteCustomer,
+  searchReservationDetail, 
+  insertReservationDetail,
+  updateReservationDetail,
+  deleteReservationDetail
 } = require("./model/lab101.model");
 
 // load .env
@@ -62,9 +66,15 @@ const CustomerformsaveDataValidator = [
 
 ];
 
+const ReservationDetailformsaveDataValidator = [
+  check("reservtaion_id").not().isEmpty().withMessage("Please input your reservation_id"),
+  check("room_id").not().isEmpty().withMessage("Please input your room_id"),
+];
+
 // start express
 var app = express();
 app.use(cors());
+var path = require('path')
 
 const rawBodySaver = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -79,6 +89,9 @@ app.use(bodyParser.json({ verify: rawBodySaver }));
 
 // start ejs (Embedded JavaScript templates)
 app.set("view engine", "ejs");
+
+// for css file
+app.use(express.static(path.join(__dirname, 'public')));
 
 // customer list data
 app.get("/customer", async function (req, res) {
@@ -455,6 +468,66 @@ app.post("/type/updatesave", TypeformsaveDataValidator, async function (req, res
     } else {
       console.log(results);
     }
+  }
+});
+
+// list reservation detail
+app.get("/reservation_detail", async function (req, res) {
+  let results = await searchReservationDetail(res);
+  res.render("reservation_detail_listdata", {
+    resultsReservationDetail: results.recordset,
+  });
+});
+
+// input reservation detail
+app.get("/reservation_detail/form", function (req, res) {
+  res.render("reservation_detail_formdata");
+});
+
+// insert new reservation detail
+app.post("/reservation_detail/formsave", ReservationDetailformsaveDataValidator, async function (req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("reservation_detail_formdata", {
+      initData: req.body,
+      errorData: errors.mapped(),
+    });
+  } else {
+    let my_paylaod = {
+      reservation_id: req.body.reservation_id,
+      room_id: req.body.room_id,
+    };
+    console.log("insert new record: " + my_paylaod);
+    let results = await insertReservationDetail(res, my_paylaod);
+    if (results == 1) {
+      return res.redirect("/reservation_detail");
+    } else {
+      console.log(results);
+    }
+  }
+});
+
+// update form
+app.get("/reservation_detail/update/:reservation_id", function (req, res) {
+  console.log(req.params.reservation_id);
+  // query for get name
+  // ...
+
+  res.render("updatedata", {
+    idReservation: req.params.reservation_id,
+  });
+});
+
+// delete form
+app.get("/reservation_detail/delete/:reservation_id", async function (req, res) {
+  console.log(req.params.reservation_id);
+  // query for get name
+  // ...
+  let results = await deleteReservationDetail(res,req.params.reservation_id);
+  if (results == 1) {
+    return res.redirect("/reservation");
+  } else {
+    console.log(results);
   }
 });
 
