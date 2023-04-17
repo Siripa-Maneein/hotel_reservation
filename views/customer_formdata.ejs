@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Insert Customer</title>
+    </head>
+    <body>
+        <form action="/customer/formsave" method="POST">
+            <div>
+                <span> Input New Data: </br></span>
+                <span>customer_id : </span>
+                <input type="number" name="customer_id" value=0 />
+            </div>
+            <div>
+                <span>firstname : </span>
+                <input type="text" name="firstname" value="" />
+            </div>
+            <div>
+                <span>lastname : </span>
+                <input type="text" name="lastname" value="" />
+            </div>
+            <div>
+                <span>email : </span>
+                <input type="text" name="email" value="" />
+            </div>
+            <div>
+                <span>phone : </span>
+                <input type="text" name="phone" value="" />
+            </div>
+
+            <input type="submit" value="submit" />
+        </form>
+    </body>
+</html>
