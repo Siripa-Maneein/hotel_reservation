@@ -220,10 +220,115 @@ const deleteReservation = async(res,reservation_id) => {
         sql.close();
     }
 }
+const searchType = async(res) => {
+
+    try {
+        
+        //console.log("string_connection :"+string_connection)
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+
+        const result = await request.query('select * from Type');
+        return result;
+
+    }
+
+    catch (err) {
+        res.status(500).send('Error connecting to the database');
+
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+}
+
+const insertType = async(res,playload) => {
+
+    try {
+        
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+
+        const result = await request.input('type_id', sql.NVarChar, playload.type_id).
+        input('type_name', sql.NVarChar, playload.type_name).
+        input('num_beds', sql.NVarChar, playload.num_beds).
+        input('max_guests', sql.NVarChar, playload.max_guests).
+        input('price', sql.NVarChar, playload.price).
+        query('insert into dbo.Type (type_id,type_name,num_beds,max_guests,price) \
+        values(@type_id,@type_name,@num_beds,@max_guests,@price)');
+
+        console.log('Rows affected:', result.rowsAffected[0]);
+        
+        return result.rowsAffected[0];
+    }
+
+    catch (err) {
+        res.status(500).send(err);
+
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+}
+
+const updateType = async(res,playload) => {
+
+    try {
+        
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+        console.log(playload)
+        const result = await request.input('type_id', sql.NVarChar, playload.type_id).
+        input('type_name', sql.NVarChar, playload.type_name).
+        input('num_beds', sql.NVarChar, playload.num_beds).
+        input('max_guests', sql.NVarChar, playload.max_guests).
+        input('price', sql.NVarChar, playload.price).
+        query('update dbo.Type set type_name = @type_name,num_beds = @num_beds\
+        ,max_guests = @max_guests,price=@price where type_id=@type_id');
+        console.log('Result: ', result.rowsAffected[0]);
+        return result.rowsAffected[0];
+        
+    }
+
+    catch (err) {
+        res.status(500).send(err);
+
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+}
+
+
+const deleteType = async(res,type_id) => {
+
+    try {
+        
+        let con = await sql.connect(string_connection)
+        let request = new sql.Request(con);
+        console.log("delete type_id:"+type_id)
+        const result = await request.input('type_id', sql.NVarChar,type_id).
+        query('delete from dbo.Type where type_id=@type_id');
+        console.log('Result: ', result.rowsAffected[0]);
+        
+        return result.rowsAffected[0];
+        
+    }
+
+    catch (err) {
+        res.status(500).send(err);
+
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+}
 
 
 module.exports = {
     searchReservation,insertReservation,
     updateReservation,deleteReservation,
     searchRoom,insertRoom,
-    updateRoom,deleteRoom}
+    updateRoom,deleteRoom, 
+    searchType,insertType,
+    updateType,deleteType}

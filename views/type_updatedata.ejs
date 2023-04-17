@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Update Type</title>
+    </head>
+    <body>
+        <h3>Type Number: <%= idType; %></h3> 
+        <form action="/type/formsave" method="POST">
+            <div>
+                <span>type_id : </span>
+                <% if ( typeof initData != "undefined" && initData.type_id ) { %>
+                <input type="number" name="type_id" value="<%= initData.type_id; %>" />
+                <% } else { %>
+                <input type="number" name="type_id" value="" />
+                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "type_id" ) ) { %>
+                <span><%= errorData.type_id.msg; %></span>
+                <% } %>
+            </div>
+            <div>
+                <span>type_name : </span>
+                <% if ( typeof initData != "undefined" && initData.type_name ) { %>
+                <input type="text" name="type_name" value="<%= initData.type_name; %>" />
+                <% } else { %>
+                <input type="text" name="type_name" value="" />
+                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "type_name" ) ) { %>
+                <span><%= errorData.type_name.msg; %></span>
+                <% } %>
+            </div>
+            <div>
+                <span>num_beds : </span>
+                <% if ( typeof initData != "undefined" && initData.num_beds ) { %>
+                <input type="number" name="num_beds" value="<%= initData.num_beds; %>" />
+                <% } else { %>
+                <input type="number" name="num_beds" value="" />
+                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "num_beds" ) ) { %>
+                <span><%= errorData.num_beds.msg; %></span>
+                <% } %>
+            </div>
+            <div>
+                <span>max_guests : </span>
+                <% if ( typeof initData != "undefined" && initData.max_guests ) { %>
+                <input type="number" name="max_guests" value="<%= initData.max_guests; %>" />
+                <% } else { %>
+                <input type="number" name="max_guests" value="" />
+                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "max_guests" ) ) { %>
+                <span><%= errorData.max_guests.msg; %></span>
+                <% } %>
+            </div>
+            <div>
+                <span>price : </span>
+                <% if ( typeof initData != "undefined" && initData.maxprice_guests ) { %>
+                <input type="number" name="price" value="<%= initData.price; %>" />
+                <% } else { %>
+                <input type="number" name="price" value="" />
+                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "price" ) ) { %>
+                <span><%= errorData.price.msg; %></span>
+                <% } %>
+            </div>
+            <input type="submit" value="submit" />
+        </form>
+    </body>
+</html>

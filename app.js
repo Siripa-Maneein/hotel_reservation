@@ -12,6 +12,10 @@ const {
   insertRoom,
   updateRoom,
   deleteRoom,
+  searchType,
+  insertType,
+  updateType,
+  deleteType,
 } = require("./model/lab101.model");
 
 // load .env
@@ -34,6 +38,14 @@ const ReservationformsaveDataValidator = [
 const RoomformsaveDataValidator = [
   check("room_id").not().isEmpty().withMessage("Please input your room_id"),
   check("type_id").not().isEmpty().withMessage("Please input your type_id"),
+];
+const TypeformsaveDataValidator = [
+  check("type_id").not().isEmpty().withMessage("Please input your type_id"),
+  check("type_name").not().isEmpty().withMessage("Please input your type_name"),
+  check("num_beds").not().isEmpty().withMessage("Please input your num_beds"),
+  check("max_guests").not().isEmpty().withMessage("Please input your max_guests"),
+  check("price").not().isEmpty().withMessage("Please input your price"),
+
 ];
 
 // start express
@@ -246,6 +258,101 @@ app.post("/reservation/updatesave", ReservationformsaveDataValidator, async func
     }
   }
 });
+// list data
+app.get("/type", async function (req, res) {
+  let results = await searchType(res);
+  res.render("type_listdata", {
+    resultsType: results.recordset,
+  });
+});
+
+
+// input form
+app.get("/type/form", function (req, res) {
+  res.render("type_formdata");
+});
+
+// update form
+app.get("/type/update/:type_id", function (req, res) {
+  console.log(req.params.type_id);
+  // query for get name
+  // ...
+
+  res.render("type_updatedata", {
+    idType: req.params.type_id,
+  });
+});
+
+// delete form
+app.get("/type/delete/:type_id", async function (req, res) {
+  console.log(req.params.type_id);
+  // query for get name
+  // ...
+  let results = await deleteType(res,req.params.type_id);
+  if (results == 1) {
+    return res.redirect("/type");
+  } else {
+    console.log(results);
+  }
+});
+
+// insert new record
+app.post("/type/formsave", TypeformsaveDataValidator, async function (req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("type_formdata", {
+      initData: req.body,
+      errorData: errors.mapped(),
+    });
+  } else {
+    let my_paylaod = {
+      type_id: req.body.type_id,
+      type_name: req.body.type_name,
+      num_beds: req.body.num_beds,
+      max_guests: req.body.max_guests,
+      price: req.body.price,
+    };
+
+    console.log("insert new record: " + my_paylaod);
+
+    let results = await insertType(res, my_paylaod);
+
+    if (results == 1) {
+      return res.redirect("/type");
+    } else {
+      console.log(results);
+    }
+  }
+});
+
+app.post("/type/updatesave", TypeformsaveDataValidator, async function (req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("type_updatedata", {
+      initData: req.body,
+      errorData: errors.mapped(),
+    });
+  } else {
+    let my_paylaod = {
+      type_id: req.body.type_id,
+      type_name: req.body.type_name,
+      num_beds: req.body.num_beds,
+      max_guests: req.body.max_guests,
+      price: req.body.price,
+    };
+
+    console.log("update: " + my_paylaod);
+
+    let results = await updateType(res, my_paylaod);
+
+    if (results == 1) {
+      return res.redirect("/type");
+    } else {
+      console.log(results);
+    }
+  }
+});
+
 
 
 app.listen(process.env.PORT, () => {
