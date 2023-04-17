@@ -2,31 +2,37 @@
 <html>
     <head>
         <title>Update Room</title>
+        <link rel="stylesheet" href="/stylescheets/formdata.css" type="text/css">
     </head>
     <body>
-        <h3>Update room_id: <%= idRoom; %></h3> 
-        <form action="/room/updatesave" method="POST">
-            <div>
-                <span>room_id : </span>
-                <% if ( typeof initData != "undefined" && initData.room_id ) { %>
-                <input type="number" name="room_id" value="<%= initData.room_id; %>" />
-                <% } else { %>
-                <input type="number" name="room_id" value="" />
-                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "room_id" ) ) { %>
-                <span><%= errorData.room_id.msg; %></span>
-                <% } %>
+        <div class="form-input">
+            <div class="head">
+                <h4>Update room_id: <%= idRoom; %></h4>
+                <hr>
             </div>
-            <div>
-                <span>type_id : </span>
-                <% if ( typeof initData != "undefined" && initData.type_id ) { %>
-                <input type="number" name="type_id" value="<%= initData.type_id; %>" />
-                <% } else { %>
-                <input type="number" name="type_id" value="" />
-                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "type_id" ) ) { %>
-                <span><%= errorData.type_id.msg; %></span>
-                <% } %>
-            </div>
-            <input type="submit" value="submit" />
-        </form>
+            <form action="/room/updatesave" method="POST">
+                <div>
+                    <span>room_id : </span>
+                    <% if ( typeof initData != "undefined" && initData.room_id ) { %>
+                    <input type="number" name="room_id" value="<%= initData.room_id; %>" />
+                    <% } else { %>
+                    <input type="number" name="room_id" value="" />
+                    <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "room_id" ) ) { %>
+                    <span><%= errorData.room_id.msg; %></span>
+                    <% } %>
+                </div>
+                <div>
+                    <span>type_id : </span>
+                    <% if ( typeof initData != "undefined" && initData.type_id ) { %>
+                    <input type="number" name="type_id" value="<%= initData.type_id; %>" />
+                    <% } else { %>
+                    <input type="number" name="type_id" value="" />
+                    <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "type_id" ) ) { %>
+                    <span><%= errorData.type_id.msg; %></span>
+                    <% } %>
+                </div>
+                <input type="submit" value="submit" id="submit" />
+            </form>
+        </div>
     </body>
 </html>
