@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Lab Node.js 101</title>
+   </head>
+   <body>
+      <a href="/room/form">Create a new Room.</a>
+      <table width="600" border="1">
+         <thead>
+            <th>room_id</th>
+            <th>type_id</th>
+         </thead>
+         <tbody>
+            <% if ( resultsRoom.length> 0 ) { %>
+            <% resultsRoom.forEach ( function ( recordRoom, index ) { %>
+            <form action="/submit" method="POST"></form>
+            <tr>
+               <td>
+                  <%= recordRoom.room_id; %>
+               </td>
+               <td>
+                  <%= recordRoom.type_id; %>
+               </td>
+               <td>
+                  <button class="update-btn" data-room_id="<%= recordRoom.room_id %>">Update</button>
+               </td>
+               <td>
+                  <button class="delete-btn" data-room_id="<%= recordRoom.room_id %>">Delete</button>
+               </td>
+            </tr>
+            </form>
+            <% } ); %>
+            <% } else { %>
+            <tr>
+               <td colspan="100%">- ไม่มีข้อมูล -</td>
+            </tr>
+            <% } %>
+         </tbody>
+      </table>
+      <script>
+         document.querySelectorAll('.update-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const room_id = this.getAttribute('data-room_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Update button with ID: ' + room_id);
+                 window.location.href = '/room/update/'+room_id;
+             });
+         });
+
+         document.querySelectorAll('.delete-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const room_id = this.getAttribute('data-room_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Delete button with ID: ' + room_id);
+                 window.location.href = '/room/delete/'+room_id;
+             });
+         });
+     </script>
+   </body>
+</html>

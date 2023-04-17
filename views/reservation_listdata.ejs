@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Lab Node.js 101</title>
+   </head>
+   <body>
+      <a href="/reservation/form">[+ New Record]</a>
+      <table width="600" border="1">
+         <thead>
+            <th>reservation_id</th>
+            <th>customer_id</th>
+            <th>num_guests</th>
+            <th>check_in_date</th>
+            <th>check_out_date</th>
+            <th>total_amount</th>
+            <th>transaction_datetime</th>
+            <th>account_name</th>
+            <th>payment_status</th>
+            <th>Update</th>
+            <th>Delete</th>
+         </thead>
+         <tbody>
+            <% if ( resultsReservation.length> 0 ) { %>
+            <% resultsReservation.forEach ( function ( recordReservation, index ) { %>
+            <form action="/submit" method="POST"></form>
+            <tr>
+               <td>
+                  <%= recordReservation.reservation_id; %>
+               </td>
+               <td>
+                  <%= recordReservation.customer_id; %>
+               </td>
+               <td>
+                  <%= recordReservation.num_guests; %>
+               </td>
+               <td>
+                  <%= recordReservation.check_in_date.toISOString().replace('-', '/').split('T')[0].replace('-', '/'); %>
+               </td>
+               <td>
+                  <%= recordReservation.check_out_date.toISOString().replace('-', '/').split('T')[0].replace('-', '/'); %>
+               </td>
+               <td>
+                  <%= recordReservation.total_amount; %>
+               </td>
+               <td>
+                  <%= recordReservation.transaction_datetime?.toISOString() %>
+               </td>
+               <td>
+                  <%= recordReservation.account_name; %>
+               </td>
+               <td>
+                  <%= recordReservation.payment_status; %>
+               </td>
+               <td>
+                  <button class="update-btn" data-reservation_id="<%= recordReservation.reservation_id %>">Update</button>
+               </td>
+               <td>
+                  <button class="delete-btn" data-reservation_id="<%= recordReservation.reservation_id %>">Delete</button>
+               </td>
+            </tr>
+            </form>
+            <% } ); %>
+            <% } else { %>
+            <tr>
+               <td colspan="100%">- ไม่มีข้อมูล -</td>
+            </tr>
+            <% } %>
+         </tbody>
+      </table>
+      <script>
+         document.querySelectorAll('.update-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const reservation_id = this.getAttribute('data-reservation_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Update button with ID: ' + reservation_id);
+                 window.location.href = '/reservation/update/'+reservation_id;
+             });
+         });
+
+         document.querySelectorAll('.delete-btn').forEach(button => {
+             button.addEventListener('click', function() {
+                 const reservation_id = this.getAttribute('data-reservation_id');
+                 // Perform an action with the ID, such as updating data or redirecting to an update page
+                 alert('Clicked Delete button with ID: ' + reservation_id);
+                 window.location.href = '/reservation/delete/'+reservation_id;
+             });
+         });
+     </script>
+    </body>
+    </html>
