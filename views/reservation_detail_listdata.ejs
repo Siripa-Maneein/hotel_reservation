@@ -2,10 +2,15 @@
 <html>
    <head>
       <title>Hotel Reservation</title>
+      <link rel="stylesheet" href="../stylescheets/listdata.css" type="text/css">
    </head>
    <body>
-      <a href="/reservation_detail/form">[+ New Record]</a>
-      <table width="600" border="1">
+      <div class="title-head">
+         <h1>Reservation detail Table</h1>
+         <a href="/reservation_detail/form">[+ New Record]</a>
+      </div>
+     
+      <table width="600" border="1" class="styled-table">
          <thead>
             <th>reservation_id</th>
             <th>room_id</th>
@@ -45,7 +50,7 @@
                  const reservation_id = this.getAttribute('data-reservation_id');
                  // Perform an action with the ID, such as updating data or redirecting to an update page
                  alert('Clicked Update button with ID: ' + reservation_id);
-                 window.location.href = '/reservation/update/'+reservation_id;
+                 window.location.href = '/reservation_detail/update/'+reservation_id;
              });
          });
 
@@ -54,7 +59,7 @@
                  const reservation_id = this.getAttribute('data-reservation_id');
                  // Perform an action with the ID, such as updating data or redirecting to an update page
                  alert('Clicked Delete button with ID: ' + reservation_id);
-                 window.location.href = '/reservation/delete/'+reservation_id;
+                 window.location.href = '/reservation_detail/delete/'+reservation_id;
              });
          });
      </script>

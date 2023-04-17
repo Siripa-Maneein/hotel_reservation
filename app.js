@@ -513,7 +513,7 @@ app.get("/reservation_detail/update/:reservation_id", function (req, res) {
   // query for get name
   // ...
 
-  res.render("updatedata", {
+  res.render("reservation_detail_updatedata", {
     idReservation: req.params.reservation_id,
   });
 });

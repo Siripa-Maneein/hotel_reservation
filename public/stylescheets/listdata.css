@@ -1,0 +1,81 @@
+@import "https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic";
+
+html, body {
+    position: relative;
+    min-height: 100%;
+}
+  
+html {
+    position: relative;
+    overflow-x: hidden;
+    margin: 16px;
+    padding: 0;
+    min-height: 100%;
+    font-size: 62.5%; 
+}
+  
+body {
+    font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    letter-spacing: 0.01rem;
+    color: #212121;
+    background-color: #f5f5f5;
+  
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius:6px;
+    overflow:hidden;
+    
+}
+
+.styled-table thead tr {
+    background-color: #87abe0;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #87abe0;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #87abe0;
+}
+
+.insert a {
+    margin-left: 5rem;
+}
+
+  
+.title-head {
+    text-align: center;
+}

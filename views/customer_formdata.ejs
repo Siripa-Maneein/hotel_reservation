@@ -2,11 +2,16 @@
 <html>
     <head>
         <title>Insert Customer</title>
+        <link rel="stylesheet" href="../stylescheets/formdata.css" type="text/css">
     </head>
     <body>
+        <div class="form-input">
+            <div class="head">
+                <h4>Input New Data</h4>
+                <hr>
+            </div>
         <form action="/customer/formsave" method="POST">
             <div>
-                <span> Input New Data: </br></span>
                 <span>customer_id : </span>
                 <input type="number" name="customer_id" value=0 />
             </div>
@@ -27,7 +32,9 @@
                 <input type="text" name="phone" value="" />
             </div>
 
-            <input type="submit" value="submit" />
+            <input type="submit" value="submit" id="submit"/>
+           
         </form>
+        </div> 
     </body>
 </html>

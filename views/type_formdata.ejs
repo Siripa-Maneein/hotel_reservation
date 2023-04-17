@@ -2,8 +2,14 @@
 <html>
     <head>
         <title>Insert Type Room</title>
+        <link rel="stylesheet" href="../stylescheets/formdata.css" type="text/css">
     </head>
     <body>
+        <div class="form-input">
+            <div class="head">
+                <h4>Input New Data</h4>
+                <hr>
+            </div>
         <form action="/type/formsave" method="POST">
             <div>
                 <span>type_id : </span>
@@ -55,7 +61,8 @@
                 <span><%= errorData.price.msg; %></span>
                 <% } %>
             </div>
-            <input type="submit" value="submit" />
+            <input type="submit" value="submit" id="submit"/>
         </form>
+    </div>
     </body>
 </html>

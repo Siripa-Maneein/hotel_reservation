@@ -2,13 +2,19 @@
 <html>
    <head>
       <title>Hotel Reservation</title>
+      <link rel="stylesheet" href="../stylescheets/listdata.css" type="text/css">
    </head>
    <body>
-      <a href="/room/form">Create a new Room.</a>
-      <table width="600" border="1">
+      <div class="title-head">
+         <h1>Room Table</h1>
+         <a href="/room/form">Create a new Room.</a>
+      </div>
+      <table width="600" border="1" class="styled-table">
          <thead>
             <th>room_id</th>
             <th>type_id</th>
+            <th>Update</th>
+            <th>Delete</th>
          </thead>
          <tbody>
             <% if ( resultsRoom.length> 0 ) { %>
