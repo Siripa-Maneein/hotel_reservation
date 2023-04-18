@@ -13,9 +13,14 @@ git clone https://github.com/Siripa-Maneein/hotel_reservation.git
 cd hotel_reservation
 ```
 3. Change password in .env to yours 
-4. Run the app
+4. For the first time run:
+```
+npm i
+```
+
+5. Run the app
 
 ```
 node app.js
 ```
-5. Visit http://127.0.0.1:8082
+6. Visit http://127.0.0.1:8082
