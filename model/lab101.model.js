@@ -453,7 +453,7 @@ const insertReservationDetail = async(res,playload) => {
 
         const result = await request.input('reservation_id', sql.Int, playload.reservation_id).
         input('room_id', sql.Int, playload.room_id).
-        query('insert into dbo.reservation_detail (reservation_id,room_id) \
+        query('insert into dbo.Reservation_detail (reservation_id,room_id) \
         values(@reservation_id,@room_id)');
 
         console.log('Rows affected:', result.rowsAffected[0]);
@@ -473,14 +473,13 @@ const updateReservationDetail = async(res,playload) => {
         let con = await sql.connect(string_connection)
         let request = new sql.Request(con);
         console.log(playload)
-        const result = await request.input('reservation_id', sql.VarChar, playload.reservation_id)
-        input('room_id', sql.VarChar, playload.room_id).
-        
-        query('update dbo.reservation_detail set room_id=@room_id where reservation_id=@reservation_id\
+        const result = await request.input('reservation_id', sql.Int, playload.reservation_id).
+        input('room_id', sql.Int, playload.room_id).
+        query('update dbo.Reservation_detail set room_id=@room_id where reservation_id=@reservation_id\
         ');
         console.log('Result: ', result.rowsAffected[0]);
         
-        return result.rowsAffected[0];      
+        return result.rowsAffected[0];     
     }
     catch (err) {
         res.status(500).send(err);
