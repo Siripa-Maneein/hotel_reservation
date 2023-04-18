@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Input New Data</title>
+        <title>Insert Reservation Detail</title>
         <link rel="stylesheet" href="../stylescheets/formdata.css" type="text/css">
     </head>
     <body>
@@ -10,18 +10,29 @@
                 <h4>Input New Data</h4>
                 <hr>
             </div>
-            <form action="/reservation_detail/formsave" method="POST">
-                <div class="res-id">
-                    <label>reservation_id : </label>
-                    <input type="text" name="reservation_id" value="" id="res"/>
-                </div>
-                <div class="room-id">
-                    <label>room_id : </label>
-                    <input type="text" name="room_id" value="" id="room"/>
-                </div>
-                <input type="submit" value="submit" id="submit"/>
-            </form>
-        </div>
-        
+        <form action="/reservation_detail/formsave" method="POST">
+            <div>
+                <span>reservation_id : </span>
+                <% if ( typeof initData != "undefined" && initData.reservation_id ) { %>
+                <input type="number" name="reservation_id" value="<%= initData.reservation_id; %>" />
+                <% } else { %>
+                <input type="number" name="reservation_id" value="" />
+                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "reservation_id" ) ) { %>
+                <span><%= errorData.reservation_id.msg; %></span>
+                <% } %>
+            </div>
+            <div>
+                <span>room_id : </span>
+                <% if ( typeof initData != "undefined" && initData.room_id ) { %>
+                <input type="number" name="room_id" value="<%= initData.room_id; %>" />
+                <% } else { %>
+                <input type="number" name="room_id" value="" />
+                <% } %> <% if ( typeof errorData != "undefined" && errorData.hasOwnProperty ( "room_id" ) ) { %>
+                <span><%= errorData.room_id.msg; %></span>
+                <% } %>
+            </div>
+            <input type="submit" value="submit" />
+        </form>
+        </div> 
     </body>
 </html>

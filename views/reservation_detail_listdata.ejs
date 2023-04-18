@@ -6,10 +6,9 @@
    </head>
    <body>
       <div class="title-head">
-         <h1>Reservation detail Table</h1>
+         <h1>Reservation Detail Table</h1>
          <a href="/reservation_detail/form">[+ New Record]</a>
       </div>
-     
       <table width="600" border="1" class="styled-table">
          <thead>
             <th>reservation_id</th>
@@ -18,21 +17,21 @@
             <th>Delete</th>
          </thead>
          <tbody>
-            <% if ( resultsReservationDetail.length> 0 ) { %>
-            <% resultsReservationDetail.forEach ( function ( recordReservationDetail, index ) { %>
+            <% if ( resultsRerservationDetail.length> 0 ) { %>
+            <% resultsRerservationDetail.forEach ( function ( recordRerservationDetail, index ) { %>
             <form action="/submit" method="POST"></form>
             <tr>
                <td>
-                  <%= recordReservationDetail.reservation_id; %>
+                  <%= recordRerservationDetail.reservation_id; %>
                </td>
                <td>
-                  <%= recordReservationDetail.room_id; %>
+                  <%= recordRerservationDetail.room_id; %>
                </td>
                <td>
-                  <button class="update-btn" data-reservation_id="<%= recordReservationDetail.reservation_id %>">Update</button>
+                  <button class="update-btn" data-reservation_id="<%= recordRerservationDetail.reservation_id %>" data-room_id="<%= recordRerservationDetail.room_id %>">Update</button>
                </td>
                <td>
-                  <button class="delete-btn" data-reservation_id="<%= recordReservationDetail.reservation_id %>">Delete</button>
+                  <button class="delete-btn" data-reservation_id="<%= recordRerservationDetail.reservation_id %>" data-room_id="<%= recordRerservationDetail.room_id %>">Delete</button>
                </td>
             </tr>
             </form>
@@ -48,21 +47,22 @@
          document.querySelectorAll('.update-btn').forEach(button => {
              button.addEventListener('click', function() {
                  const reservation_id = this.getAttribute('data-reservation_id');
+                 const room_id = this.getAttribute('data-room_id');
                  // Perform an action with the ID, such as updating data or redirecting to an update page
-                 alert('Clicked Update button with ID: ' + reservation_id);
-                 window.location.href = '/reservation_detail/update/'+reservation_id;
+                 alert('Clicked Update button with reservation_id = ' + reservation_id +  " room_id ="+room_id);
+                 window.location.href = '/reservation_detail/update/'+reservation_id+"/"+room_id;
              });
          });
 
          document.querySelectorAll('.delete-btn').forEach(button => {
              button.addEventListener('click', function() {
                  const reservation_id = this.getAttribute('data-reservation_id');
+                 const room_id = this.getAttribute('data-room_id');
                  // Perform an action with the ID, such as updating data or redirecting to an update page
-                 alert('Clicked Delete button with ID: ' + reservation_id);
-                 window.location.href = '/reservation_detail/delete/'+reservation_id;
+                 alert('Clicked Delete button with reservation_id = ' + reservation_id +  " room_id ="+room_id);
+                 window.location.href = '/reservation_detail/delete/'+reservation_id+"/"+room_id;
              });
          });
      </script>
-     
    </body>
 </html>

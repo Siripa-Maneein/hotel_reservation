@@ -429,17 +429,24 @@ const deleteType = async(res,type_id) => {
     }
 }
 
+
+
 const searchReservationDetail = async(res) => {
+
     try {
+        
         //console.log("string_connection :"+string_connection)
         let con = await sql.connect(string_connection)
         let request = new sql.Request(con);
-  
-        const result = await request.query('select * from reservation_detail');
+
+        const result = await request.query('select * from Reservation_detail');
         return result;
+
     }
+
     catch (err) {
         res.status(500).send('Error connecting to the database');
+
     } finally {
         // Close the database connection
         sql.close();
@@ -447,7 +454,9 @@ const searchReservationDetail = async(res) => {
 }
 
 const insertReservationDetail = async(res,playload) => {
-    try {      
+
+    try {
+        
         let con = await sql.connect(string_connection)
         let request = new sql.Request(con);
 
@@ -460,8 +469,10 @@ const insertReservationDetail = async(res,playload) => {
         
         return result.rowsAffected[0];
     }
+
     catch (err) {
         res.status(500).send(err);
+
     } finally {
         // Close the database connection
         sql.close();
@@ -469,44 +480,64 @@ const insertReservationDetail = async(res,playload) => {
 }
 
 const updateReservationDetail = async(res,playload) => {
-    try {      
+
+    try {
+        
         let con = await sql.connect(string_connection)
         let request = new sql.Request(con);
         console.log(playload)
         const result = await request.input('reservation_id', sql.Int, playload.reservation_id).
         input('room_id', sql.Int, playload.room_id).
-        query('update dbo.Reservation_detail set room_id=@room_id where reservation_id=@reservation_id\
+        input('old_room_id', sql.Int, playload.old_room_id).
+        query('update dbo.Reservation_detail set room_id=@room_id where reservation_id=@reservation_id and room_id=@old_room_id\
         ');
         console.log('Result: ', result.rowsAffected[0]);
         
-        return result.rowsAffected[0];     
+        return result.rowsAffected[0];
+        
     }
+
     catch (err) {
         res.status(500).send(err);
+
     } finally {
         // Close the database connection
         sql.close();
     }
 }
 
-const deleteReservationDetail = async(res,reservation_id) => {
-    try {     
+
+const deleteReservationDetail = async(res,reservation_id, room_id) => {
+
+    try {
+        
         let con = await sql.connect(string_connection)
         let request = new sql.Request(con);
-        console.log("delete reservation id:"+reservation_id)
-        const result = await request.input('reservation id', sql.Int,reservation_id).
-        query('delete from dbo.reservation_detail where reservation_id=@reservation_id');
+        console.log("delete reservation_id:"+reservation_id +" room_id:"+room_id);
+        const result = await request.input('reservation_id', sql.Int, reservation_id).
+        input('room_id', sql.Int, room_id).
+        query('delete from dbo.Reservation_detail where reservation_id=@reservation_id and room_id=@room_id');
         console.log('Result: ', result.rowsAffected[0]);
         
-        return result.rowsAffected[0];      
+        return result.rowsAffected[0];
+        
     }
+
     catch (err) {
+        console.log(err)
         res.status(500).send(err);
+
     } finally {
         // Close the database connection
         sql.close();
     }
 }
+
+
+
+
+
+
 
 
 module.exports = {

@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Update reservation</title>
+        <title>Update Reseervation Detail</title>
         <link rel="stylesheet" href="/stylescheets/formdata.css" type="text/css">
     </head>
     <body>
         <div class="form-input">
             <div class="head">
-                <h4>Update reservation_id: <%= idReservation; %></h4>
+                <h4>Update reservation_id: <%= idReservation; %> room_id: <%= idRoom; %></h4>
                 <hr>
             </div>
-        <form action="/reservation/updatesave" method="POST">
+        <form action="/reservation_detail/updatesave" method="POST">
             <div>
                 <span>reservation_id : </span>
-                <input type="number" name="reservation_id" value="<%= idReservation; %>" readonly />
+                
+                <input type="number" name="reservation_id" value="" />
+               
             </div>
             <div>
                 <span>room_id : </span>
-                <input type="number" name="customer_id" value="" />
+                
+                <input type="number" name="room_id" value="" />
+                <input type="hidden" name="old_room_id" value= "<%= idRoom; %>" />
+                
             </div>
-            <input type="submit" value="submit" id="submit"/>
+            <input type="submit" value="submit" />
         </form>
-        </div>
+    </div>
     </body>
 </html>

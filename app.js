@@ -67,7 +67,7 @@ const CustomerformsaveDataValidator = [
 ];
 
 const ReservationDetailformsaveDataValidator = [
-  check("reservtaion_id").not().isEmpty().withMessage("Please input your reservation_id"),
+  check("reservation_id").not().isEmpty().withMessage("Please input your reservation_id"),
   check("room_id").not().isEmpty().withMessage("Please input your room_id"),
 ];
 
@@ -471,20 +471,47 @@ app.post("/type/updatesave", TypeformsaveDataValidator, async function (req, res
   }
 });
 
-// list reservation detail
-app.get("/reservation_detail", async function (req, res) {
+
+// list data
+app.get("/reservation_detail/", async function (req, res) {
   let results = await searchReservationDetail(res);
   res.render("reservation_detail_listdata", {
-    resultsReservationDetail: results.recordset,
+    resultsRerservationDetail: results.recordset,
   });
 });
 
-// input reservation detail
+// input form
 app.get("/reservation_detail/form", function (req, res) {
   res.render("reservation_detail_formdata");
 });
 
-// insert new reservation detail
+// update form
+app.get("/reservation_detail/update/:reservation_id/:room_id", function (req, res) {
+  console.log(req.params.room_id);
+  // query for get name
+  // ...
+
+  res.render("reservation_detail_updatedata", {
+    idReservation: req.params.reservation_id,
+    idRoom: req.params.room_id,
+  });
+});
+
+// delete form
+app.get("/reservation_detail/delete/:reservation_id/:room_id", async function (req, res) {
+  console.log(req.params.reservation_id);
+  console.log(req.params.room_id);
+  // query for get name
+  // ...
+  let results = await deleteReservationDetail(res,req.params.reservation_id,req.params.room_id);
+  if (results >= 1) {
+    return res.redirect("/reservation_detail/");
+  } else {
+    console.log(results);
+  }
+});
+
+// insert new record
 app.post("/reservation_detail/formsave", ReservationDetailformsaveDataValidator, async function (req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -497,39 +524,45 @@ app.post("/reservation_detail/formsave", ReservationDetailformsaveDataValidator,
       reservation_id: req.body.reservation_id,
       room_id: req.body.room_id,
     };
+
     console.log("insert new record: " + my_paylaod);
+
     let results = await insertReservationDetail(res, my_paylaod);
+
     if (results == 1) {
-      return res.redirect("/reservation_detail");
+      return res.redirect("/reservation_detail/");
     } else {
       console.log(results);
     }
   }
 });
 
-// update form
-app.get("/reservation_detail/update/:reservation_id", function (req, res) {
-  console.log(req.params.reservation_id);
-  // query for get name
-  // ...
-
-  res.render("reservation_detail_updatedata", {
-    idReservation: req.params.reservation_id,
-  });
-});
-
-// delete form
-app.get("/reservation_detail/delete/:reservation_id", async function (req, res) {
-  console.log(req.params.reservation_id);
-  // query for get name
-  // ...
-  let results = await deleteReservationDetail(res,req.params.reservation_id);
-  if (results == 1) {
-    return res.redirect("/reservation");
+app.post("/reservation_detail/updatesave", ReservationDetailformsaveDataValidator, async function (req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("reservation_detail_updatedata", {
+      initData: req.body,
+      errorData: errors.mapped(),
+    });
   } else {
-    console.log(results);
+    let my_paylaod = {
+      reservation_id: req.body.reservation_id,
+      room_id: req.body.room_id,
+      old_room_id: req.body.old_room_id,      
+    };
+
+    console.log("update: " + my_paylaod);
+    let results = await updateReservationDetail(res, my_paylaod);
+
+    if (results == 1) {
+      return res.redirect("/reservation_detail/");
+    } else {
+      console.log(results);
+    }
   }
 });
+
+
 
 
 
